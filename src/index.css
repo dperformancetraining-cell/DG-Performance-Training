@@ -1,0 +1,251 @@
+@import 'tailwindcss';
+
+/* ==================================================================
+   PALETTE — the whole site is coloured from this one block.
+   Change these eleven values and every section follows.
+   ================================================================== */
+@theme {
+  --color-ink: #070b09; /* page base */
+  --color-surface: #0e1411; /* elevated: cards, bands */
+  --color-surface-2: #141c17; /* floating: hovered cards */
+  --color-fg: #ffffff; /* headings and primary text */
+  --color-muted: #9aa79f; /* body copy — 8.4:1 on the base */
+  --color-hair: rgba(255, 255, 255, 0.1); /* hairline borders */
+  --color-line-strong: rgba(255, 255, 255, 0.3); /* outline buttons */
+  --color-wash: rgba(255, 255, 255, 0.06); /* hover fill */
+  --color-brand: #23b45c; /* the only accent */
+  --color-brand-deep: #0a4a26; /* accent, used for depth only */
+  --color-map: #060a08; /* journey map ocean */
+  --color-land: #16211b; /* journey map continents */
+
+  --font-display: 'Anton', 'Arial Narrow', ui-sans-serif, sans-serif;
+  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
+
+  --ease-soft: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-ink);
+    color: var(--color-fg);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+
+  /* Sticky header clearance for anchor jumps. */
+  section[id],
+  footer[id] {
+    scroll-margin-top: 5.5rem;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    line-height: 0.92;
+  }
+
+  ::selection {
+    background: var(--color-brand);
+    color: #fff;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-brand);
+    outline-offset: 3px;
+  }
+
+  img {
+    max-width: 100%;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Layout helpers
+   ------------------------------------------------------------------ */
+.dg-container {
+  margin-inline: auto;
+  width: 100%;
+  max-width: 76rem;
+  padding-inline: 1.5rem;
+}
+@media (min-width: 640px) {
+  .dg-container {
+    padding-inline: 2.5rem;
+  }
+}
+
+/* Fine grain over dark surfaces — keeps large black areas from looking flat. */
+.dg-grain::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.22;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ------------------------------------------------------------------
+   Logo motion. Outer element owns the load turn, inner owns hover.
+   Switch the default in src/config.ts (HERO_LOGO_ANIMATION).
+   ------------------------------------------------------------------ */
+@keyframes dg-turn {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.dg-logo-turn {
+  animation: dg-turn 1.9s var(--ease-soft) both;
+}
+
+.dg-logo-turn--loop {
+  animation: dg-turn 26s linear infinite;
+}
+
+.dg-logo-tilt {
+  transition: transform 700ms var(--ease-soft);
+  will-change: transform;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .dg-logo-tilt:hover {
+    transform: rotate(9deg) scale(1.035);
+  }
+}
+
+/* ------------------------------------------------------------------
+   Scroll reveal
+   ------------------------------------------------------------------ */
+.dg-reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 900ms var(--ease-soft),
+    transform 900ms var(--ease-soft);
+}
+
+.dg-reveal[data-visible='true'] {
+  opacity: 1;
+  transform: none;
+}
+
+/* ------------------------------------------------------------------
+   Journey map: arc draw + plane flight
+   ------------------------------------------------------------------ */
+@keyframes dg-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes dg-fly {
+  0% {
+    offset-distance: 0%;
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  88% {
+    opacity: 1;
+  }
+  100% {
+    offset-distance: 100%;
+    opacity: 0;
+  }
+}
+
+@keyframes dg-arrive {
+  0% {
+    transform: scale(0.4);
+    opacity: 0.75;
+  }
+  100% {
+    transform: scale(1.9);
+    opacity: 0;
+  }
+}
+
+.dg-arc-mask {
+  stroke-dasharray: var(--dg-arc-length);
+  stroke-dashoffset: var(--dg-arc-length);
+}
+
+[data-flight='true'] .dg-arc-mask {
+  animation: dg-draw 2.4s var(--ease-soft) forwards;
+}
+
+.dg-plane {
+  opacity: 0;
+  offset-rotate: auto;
+}
+
+[data-flight='true'] .dg-plane {
+  animation: dg-fly 2.4s var(--ease-soft) forwards;
+}
+
+.dg-arrive-ring {
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+[data-flight='true'] .dg-arrive-ring {
+  animation: dg-arrive 1.4s var(--ease-soft) 2.2s forwards;
+}
+
+/* ------------------------------------------------------------------
+   Reduced motion: everything settles into its finished state.
+   ------------------------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .dg-logo-turn,
+  .dg-logo-turn--loop,
+  [data-flight='true'] .dg-arc-mask,
+  [data-flight='true'] .dg-plane,
+  [data-flight='true'] .dg-arrive-ring {
+    animation: none;
+  }
+
+  .dg-logo-tilt,
+  .dg-logo-tilt:hover {
+    transform: none;
+    transition: none;
+  }
+
+  .dg-reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .dg-arc-mask {
+    stroke-dashoffset: 0;
+  }
+
+  .dg-plane {
+    display: none;
+  }
+
+  .dg-arrive-ring {
+    display: none;
+  }
+}
