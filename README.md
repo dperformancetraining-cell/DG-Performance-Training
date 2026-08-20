@@ -82,6 +82,9 @@ Both live in `public/`. Drop a replacement in with the same filename and the lay
 | `public/og-image.png` | The 1200×630 social preview card (WhatsApp, iMessage, Facebook). |
 | `public/favicon.png` | The browser tab icon. |
 
+The untouched originals of both images are kept in `brand/`, along with the script that rebuilds
+the logo files. See `brand/README.md`.
+
 To change how much of the hero photo shows: `src/components/Hero.tsx`, the `opacity-[0.55]` class on
 the image, and the gradient line directly under it.
 
