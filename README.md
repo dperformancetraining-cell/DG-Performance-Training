@@ -15,7 +15,7 @@ npm run preview  # serve the built site
 Vercel gives you a free address like `dg-performance-training.vercel.app`. No payment, no domain
 needed. You can point a real domain at it later without rebuilding anything.
 
-Easiest route — from this folder:
+Already done for this project. For reference, the manual route from this folder is:
 
 ```bash
 npx vercel login     # once, with your email or GitHub account
@@ -28,10 +28,9 @@ nothing to configure and no `vercel.json` needed.
 Or through the website: push this folder to a GitHub repo, then vercel.com → Add New → Project →
 import the repo → Deploy. Every push after that redeploys automatically.
 
-**One thing to fix after the first deploy.** Vercel will tell you the real address it gave you.
-Open `index.html` and replace `https://dg-performance-training.vercel.app/` in the four `og:` and
-`twitter:` tags with that address — social previews (WhatsApp, iMessage, Instagram DMs) need the
-full URL to show the logo card.
+**Already deployed.** The site is live at **https://dgperformance.vercel.app**, the GitHub repo is
+connected, and every push to `main` redeploys it automatically. If you later add a custom domain,
+update the four `og:`/`twitter:` URLs in `index.html` to match.
 
 ---
 
