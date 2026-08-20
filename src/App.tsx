@@ -20,17 +20,22 @@ export default function App() {
 
       <Header />
 
-      <main id="main">
-        <Hero />
-        <WhoWeAre />
-        <Commitment />
-        <Offer />
-        <Locations />
-        <Booking />
-        <Registration />
-      </main>
+      <div className="relative">
+        {/* Green atmosphere behind the whole page — see .dg-page-wash in index.css */}
+        <div aria-hidden="true" className="dg-page-wash pointer-events-none absolute inset-0 -z-10" />
 
-      <Footer />
+        <main id="main">
+          <Hero />
+          <WhoWeAre />
+          <Commitment />
+          <Offer />
+          <Locations />
+          <Booking />
+          <Registration />
+        </main>
+
+        <Footer />
+      </div>
     </>
   );
 }

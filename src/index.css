@@ -6,8 +6,8 @@
    ================================================================== */
 @theme {
   --color-ink: #070b09; /* page base */
-  --color-surface: #0e1411; /* elevated: cards, bands */
-  --color-surface-2: #141c17; /* floating: hovered cards */
+  --color-surface: #0f1714; /* elevated: cards, bands */
+  --color-surface-2: #17211b; /* floating: hovered cards */
   --color-fg: #ffffff; /* headings and primary text */
   --color-muted: #9aa79f; /* body copy — 8.4:1 on the base */
   --color-hair: rgba(255, 255, 255, 0.1); /* hairline borders */
@@ -83,6 +83,48 @@
   .dg-container {
     padding-inline: 2.5rem;
   }
+}
+
+/**
+ * The page wash. One soft green atmosphere behind the whole document: almost
+ * nothing at the top, alternating diffused glows left and right through the
+ * middle, and the deepest lift down near the footer. Never actually green —
+ * it only stops the black from reading flat. Sits behind everything (-z-10).
+ */
+.dg-page-wash {
+  background:
+    radial-gradient(
+      70% 24% at 88% 20%,
+      color-mix(in srgb, var(--color-brand) 9%, transparent),
+      transparent 72%
+    ),
+    radial-gradient(
+      65% 22% at 4% 40%,
+      color-mix(in srgb, var(--color-brand) 9%, transparent),
+      transparent 72%
+    ),
+    radial-gradient(
+      75% 26% at 94% 60%,
+      color-mix(in srgb, var(--color-brand) 12%, transparent),
+      transparent 72%
+    ),
+    radial-gradient(
+      85% 30% at 12% 82%,
+      color-mix(in srgb, var(--color-brand) 15%, transparent),
+      transparent 74%
+    ),
+    radial-gradient(
+      90% 26% at 70% 97%,
+      color-mix(in srgb, var(--color-brand) 13%, transparent),
+      transparent 74%
+    ),
+    linear-gradient(
+      180deg,
+      transparent 0%,
+      color-mix(in srgb, var(--color-brand) 3%, transparent) 42%,
+      color-mix(in srgb, var(--color-brand) 6%, transparent) 72%,
+      color-mix(in srgb, var(--color-brand) 10%, transparent) 100%
+    );
 }
 
 /* Fine grain over dark surfaces — keeps large black areas from looking flat. */

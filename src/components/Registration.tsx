@@ -15,7 +15,7 @@ export default function Registration() {
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            'radial-gradient(75% 110% at 50% 0%, color-mix(in srgb, var(--color-brand) 30%, transparent), transparent 62%), radial-gradient(60% 80% at 50% 100%, color-mix(in srgb, var(--color-brand) 12%, transparent), transparent 70%)',
+            'radial-gradient(75% 110% at 50% 0%, color-mix(in srgb, var(--color-brand) 16%, transparent), transparent 62%), radial-gradient(60% 80% at 50% 100%, color-mix(in srgb, var(--color-brand) 7%, transparent), transparent 70%)',
         }}
       />
 
